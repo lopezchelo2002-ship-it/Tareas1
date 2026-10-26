@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+			<title>Tarea Calculadora</title>
+			<style>
+				body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+				.container { width: 350px; padding: 20px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+				.form-group { margin-bottom: 15px; }
+				label { display: block; margin-bottom: 5px; font-weight: bold; }
+				input[type="number"], select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+				.btn { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; }
+				.btn:hover { background-color: #0056b3; }
+				.result { margin-top: 15px; font-weight: bold; font-size: 1.2em; color: #333; }
+			</style>
+		</head>
+	<body>
+
+		<div class="container">
+			<h2>Calculadora Web</h2>
+
+			<div class="form-group">
+				<label for="txtNum1">Número 1:</label>
+				<input type="number" id="txtNum1" placeholder="Ingrese el primer número">
+        </div>
+
+			<div class="form-group">
+				<label for="txtNum2">Número 2 (o Exponente):</label>
+				<input type="number" id="txtNum2" placeholder="Ingrese el segundo número">
+        </div>
+
+			<div class="form-group">
+				<label for="ddlOperacion">Seleccione Operación:</label>
+				<select id="ddlOperacion">
+					<option value="">-- Seleccione una opción --</option>
+					<option value="suma">Suma</option>
+					<option value="resta">Resta</option>
+					<option value="multiplicacion">Multiplicación</option>
+					<option value="division">División</option>
+					<option value="potencia2">Potencias 2 (Num 1 ^ 2)</option>
+					<option value="expo">Exponente (Num 1 ^ Num 2)</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<input type="checkbox" id="chkConfirmar">
+					<label for="chkConfirmar" style="display:inline;"> Confirmar cálculo</label>
+				</div>
+
+			<button class="btn" onclick="calcular()">Calcular</button>
+
+			<div class="result" id="lblResultado"></div>
+		</div>
+
+		<script>
+			function calcular() {
+			const confirmar = document.getElementById('chkConfirmar').checked;
+			const resultadoDiv = document.getElementById('lblResultado');
+
+			if (!confirmar) {
+			resultadoDiv.innerText = "Por favor, marque la casilla de confirmación.";
+			resultadoDiv.style.color = "red";
+			return;
+			}
+
+			const num1 = parseFloat(document.getElementById('txtNum1').value);
+			const num2 = parseFloat(document.getElementById('txtNum2').value);
+			const operacion = document.getElementById('ddlOperacion').value;
+
+			if (isNaN(num1)) {
+			resultadoDiv.innerText = "Ingrese un número 1 válido.";
+			resultadoDiv.style.color = "red";
+			return;
+			}
+
+			let resultado = 0;
+
+			switch (operacion) {
+			case "suma":
+			if (isNaN(num2)) { resultadoDiv.innerText = "Ingrese el número 2."; return; }
+			resultado = num1 + num2;
+			break;
+			case "resta":
+			if (isNaN(num2)) { resultadoDiv.innerText = "Ingrese el número 2."; return; }
+			resultado = num1 - num2;
+			break;
+			case "multiplicacion":
+			if (isNaN(num2)) { resultadoDiv.innerText = "Ingrese el número 2."; return; }
+			resultado = num1 * num2;
+			break;
+			case "division":
+			if (isNaN(num2)) { resultadoDiv.innerText = "Ingrese el número 2."; return; }
+			if (num2 === 0) {
+			resultadoDiv.innerText = "Error: No se puede dividir entre cero.";
+			resultadoDiv.style.color = "red";
+			return;
+			}
+			resultado = num1 / num2;
+			break;
+			case "potencia2":
+			resultado = Math.pow(num1, 2);
+			break;
+			case "expo":
+			if (isNaN(num2)) { resultadoDiv.innerText = "Ingrese el exponente (Número 2)."; return; }
+			resultado = Math.pow(num1, num2);
+			break;
+			default:
+			resultadoDiv.innerText = "Seleccione una operación del menú.";
+			resultadoDiv.style.color = "red";
+			return;
+			}
+
+			resultadoDiv.style.color = "#333";
+			resultadoDiv.innerText = "Resultado: " + resultado;
+			}
+		</script>
+
+	</body>
+</html>
